@@ -1,3 +1,1 @@
-repo sync && . build/envsetup.sh && breakfast pme && make installclean && brunch pme && . build/upload-sftp android@ustx2.safesecure.host:/var/www/vhosts/androidbuilds.spryservers.net/httpdocs/rr/pme/stable/ $OUT/*RR-N* -oIdentityFile=~/.ssh/androidbuild
-
-
+repo sync && . build/envsetup.sh && breakfast pme && make installclean && brunch pme && cd $OUT FILENAME=$(ls R*.zip) && MD5SUMNAME=$(ls R*.md5sum) && . build/upload-sftp android@ustx2.safesecure.host:/var/www/vhosts/androidbuilds.spryservers.net/httpdocs/rr/pme/stable/ $FILENAME $MD5SUMNAME -oIdentityFile=~/.ssh/androidbuild && OTAPATH=~/android/OTA && cd $OTAPATH && awk '{gsub(/RR-N-v5.8.2-*-pme-Official.zip/,"$FILENAME")}' pme.xml && git commit . -S -m 'Update version for pme' && git push ghssh:tabp0le/OTA
