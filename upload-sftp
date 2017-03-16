@@ -1,0 +1,6 @@
+#!/bin/sh
+s="$1"
+shift 1
+for f in "$@"; do
+  printf "progress\nput $f" | sftp -b- "$s" || exit 1
+done
