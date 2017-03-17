@@ -14,7 +14,7 @@ Instructions:
 Please note, currently only sftp is supported by this script. You must have your ssh key in your ~/.ssh folder, and it must be in your path. Feel free to change the script to fit your needs. (Such as ftp, ftps, scp, etc)
 
 Additionally, you may add this to your roomservice.xml and it will sync with the rest of your tree.
-  
+<a>  
   <project path="build/tabp0le-labs" name="tabp0le/little-android-build-script" remote="github" revision="testing">
     <linkfile src="builddevice.sh" dest="builddevice.sh" />
     <linkfile src="otacommit.sh" dest="otacommit.sh" />
@@ -22,3 +22,4 @@ Additionally, you may add this to your roomservice.xml and it will sync with the
     <linkfile src="upload-sftp.sh" dest="upload-sftp.sh" />
     <linkfile src="config.conf" dest="config.conf" />
   </project>
+</a>
