@@ -1,5 +1,8 @@
 #!/bin/bash
 
+### Little Android Build Script
+### Copyright 2017, Tab Fitts
+
 repo sync
 
 source config.conf

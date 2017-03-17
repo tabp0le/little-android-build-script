@@ -1,3 +1,8 @@
+#!/bin/bash
+
+### Little Android Build Script
+### Copyright 2017, Tab Fitts
+
 echo " "
 echo "Updating ota.xml."
 echo " "
