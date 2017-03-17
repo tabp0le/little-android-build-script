@@ -22,6 +22,7 @@ echo " "
 echo "Uploading..."
 
 sh upload-sftp $FTPUSER@$FTPSERVER:$FTPPATH $OUT/$FILENAME $OUT/$MD5SUMNAME
+sh upload-sftp $FTPUSER@$FTPSERVER:$FTPPATH CHANGELOG.mkdn ||
 
 echo " "
 echo "Upload complete...Updating ota.xml."
