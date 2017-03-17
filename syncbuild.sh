@@ -5,14 +5,21 @@
 
 source config.conf
 export ANDROID_BUILD_DIR=$(pwd)
-export OUT=$(echo $OUT)
 
 if [ $REPOSYNC -eq 1 ]
 then
     repo sync
-    sh builddevice.sh
 else
-    sh builddevice.sh
+    echo " "
+fi
+
+. build/envsetup.sh && breakfast $DEVICECODENAME
+
+if [ $MAKECLEAN -eq 1 ]
+then
+    make clean && brunch $DEVICECODENAME
+else
+    make installclean && brunch $DEVICECODENAME
 fi
 
 echo " "
