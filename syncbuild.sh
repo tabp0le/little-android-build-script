@@ -8,7 +8,7 @@ export ANDROID_BUILD_DIR=$(pwd)
 
 if [ $REPOSYNC -eq 1 ]
 then
-    repo sync
+    repo sync -f --force-sync
 else
     echo " "
 fi
