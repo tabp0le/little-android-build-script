@@ -5,6 +5,7 @@
 
 source config.conf
 export ANDROID_BUILD_DIR=$(pwd)
+chmod a+x otacommit.sh upload-sftp.sh
 
 if [ $REPOSYNC -eq 1 ]
 then
@@ -48,7 +49,7 @@ fi
 
 if [ $UPDATEOTAXML -eq 1 ]
 then
-    sh otacommit.sh
+    ./otacommit.sh
     cd $ANDROID_BUILD_DIR
     echo " "
     echo " "
