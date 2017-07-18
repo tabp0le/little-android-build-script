@@ -4,16 +4,21 @@
 ### Copyright 2017, Tab Fitts
 
 echo " "
-echo "Updating ota.xml."
+echo "Updating ota file."
 echo " "
 
 source config.conf
 
-cd $OTAPATH && sed -i -- 's/'"$ROMPREFIX"'.\+zip/'"$FILENAME"'/g' $OTAXML
+cd $OTAPATH && git reset --hard &&git fetch &&git pull
+
+sed -i -- 's/'"$ROMPREFIX\_"'.\+zip/'"$FILENAME"'/g' $OTAXML
+sed -i -- 's/'"<FileSize"'.\+<\/\FileSize>/'"\<FileSize type=\"\integer\"\>$FILESIZE<\/\FileSize>"'/g' $OTAXML
+sed -i -- 's/'"<VersionNumber"'.\+<\/\VersionNumber>/'"\<VersionNumber type=\"\integer\"\>$BUILD_DATE<\/\VersionNumber>"'/g' $OTAXML
+sed -i -- 's/'"<CheckMD5"'.\+<\/\CheckMD5>/'"\<CheckMD5>$MD5<\/\CheckMD5>"'/g' $OTAXML
 
 echo " "
-echo "Commiting and uploading ota.xml changes to Github"
+echo "Committing and pushing changes"
 
-git commit $OTAXML -S -m "'$OTACOMMITMSG'" && git push $OTAREPO
+git commit $OTAXML -m "'$OTACOMMITMSG'" && git push $OTAREPO
 
-echo "Update ota.xml complete."
+echo "Update ota complete."
