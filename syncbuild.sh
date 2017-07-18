@@ -9,18 +9,21 @@ chmod a+x otacommit.sh upload-sftp.sh
 
 if [ $REPOSYNC -eq 1 ]
 then
-    repo sync -f --force-sync
+    repo sync -f --force-sync -j24
 else
     echo " "
 fi
 
 . build/envsetup.sh && breakfast $DEVICECODENAME
 
+source config.conf
+export BUILD_DATE=$(date +%Y%m%d)
+
 if [ $MAKECLEAN -eq 1 ]
 then
-    make clean && brunch $DEVICECODENAME
+    make clean && brunch $ROMPREFIX_$DEVICECODENAME-userdebug -j24
 else
-    make installclean && brunch $DEVICECODENAME
+    make installclean && brunch $ROMPREFIX_$DEVICECODENAME-userdebug -j24
 fi
 
 echo " "
@@ -31,6 +34,9 @@ cd $OUT
 
 export FILENAME=$(ls |grep -m 1 $ROMPREFIX*.zip)
 export MD5SUMNAME=$(ls |grep -m 1 $ROMPREFIX*.md5sum)
+export CHANGELOG=$(ls |grep -m 1 $ROMPREFIX*changelog.txt)
+export FILESIZE=$(stat -c%s $FILENAME)
+export MD5=$(md5sum $FILENAME | awk '{ print $1 }')
 
 cd $ANDROID_BUILD_DIR
 
@@ -39,7 +45,7 @@ then
     echo " "
     echo "Uploading..."
     sh upload-sftp.sh $FTPUSER@$FTPSERVER:$FTPPATH $OUT/$FILENAME $OUT/$MD5SUMNAME
-    sh upload-sftp.sh $FTPUSER@$FTPSERVER:$FTPPATH CHANGELOG.mkdn ||
+    sh upload-sftp.sh $FTPUSER@$FTPSERVER:$FTPPATH $OUT/$CHANGELOG ||
     echo " "
     echo "Upload complete."
     echo " "
