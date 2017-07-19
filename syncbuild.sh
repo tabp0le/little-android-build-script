@@ -37,6 +37,7 @@ export MD5SUMNAME=$(ls |grep -m 1 $ROMPREFIX*.md5sum)
 export CHANGELOG=$(ls |grep -m 1 $ROMPREFIX*changelog.txt)
 export FILESIZE=$(stat -c%s $FILENAME)
 export MD5=$(md5sum $FILENAME | awk '{ print $1 }')
+export OTA_VERSION=$(echo ${FILENAME%.*})
 
 cd $ANDROID_BUILD_DIR
 
